@@ -8,6 +8,7 @@ from flask_cors import cross_origin
 
 app = Flask(__name__, template_folder="template")
 
+
 def load_model():
     """Loads the model from the specified model path."""
 
