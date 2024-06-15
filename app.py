@@ -35,7 +35,7 @@ def preprocessor(input_lst: list) -> np.ndarray:
 @app.route("/", methods=["GET"])
 @cross_origin()
 def home():
-    return render_template("index2.html")
+    return render_template("index.html")
 
 
 @app.route("/predict", methods=["GET", "POST"])
