@@ -7,10 +7,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from ucimlrepo import fetch_ucirepo
 
+sys.path.insert(0, os.getcwd())
+from src.components.data_transformation import DataTransformation
 from src.exception import CustomException
 from src.logger import logging
-from src.components.data_transformation import DataTransformation
-from src.components.data_transformation import DataTransformationConfig
 
 
 @dataclass
@@ -69,7 +69,7 @@ class DataIngestion:
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
 
             logging.info("Train test split initiated")
-            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
+            train_set, test_set = train_test_split(df, test_size=0.33, random_state=42)
 
             train_set.to_csv(
                 self.ingestion_config.train_data_path, index=False, header=True
@@ -94,8 +94,7 @@ if __name__ == "__main__":
     try:
         obj = DataIngestion()
         train_data, test_data = obj.initiate_data_ingestion()
-
-        data_transformation= DataTransformation()
-        data_transformation.initiate_data_transformation(train_data,test_data)
+        data_transformation = DataTransformation()
+        data_transformation.initiate_data_transformation(train_data, test_data)
     except Exception as e:
         raise CustomException(e, sys)
