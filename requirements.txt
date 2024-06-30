@@ -6,4 +6,6 @@ scikit-learn
 scipy
 ucimlrepo
 dill
+flask
+flask_cors
 #-e .
