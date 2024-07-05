@@ -40,7 +40,17 @@ def preprocessor(input_lst: list) -> np.ndarray:
 def home():
     return render_template("index.html")
 
-
+@app.route('/predict2', methods=['GET', 'POST'])
+@cross_origin()
+def predict2():
+    if request.method == 'POST':
+        # Extract form data
+        form_data = request.form.to_dict()
+        
+        data = np.array([list(map(float, form_data.values()))])
+        # Make prediction
+        prediction = model.predict(data)[0]
+    return render_template('predictor2.html')
 @app.route("/predict", methods=["GET", "POST"])
 @cross_origin()
 def predict():
