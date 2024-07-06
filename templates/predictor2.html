@@ -15,14 +15,40 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href={{url_for('static',filename='predictor2.css')}}>
+    <link rel="stylesheet" href="{{url_for('static',filename='predictor2.css')}}">
     <title>Heart Disease Prediction</title>
   </head>
   <body>
     <section id="prediction-form">
-      <form class="form" action="/predict2" , method="POST">
-        <h1 class="my-3 text-center">Predictor Without Python Packages</h1>
+      <form class="form" action="/predict2" method="POST">
+        <h1 class="my-3 text-center">Predictor WithOut Python Packages</h1>
         <div class="row">
+          <!-- Patient Id -->
+          <div class="col-md-6 my-2">
+            <div class="md-form">
+              <label for="patient_id" class="patient_id">Patient Id</label>
+              <input
+                type="text"
+                class="form-control"
+                id="patient_id"
+                name="patient_id"
+                placeholder="Enter patient id"
+              />
+            </div>
+          </div>
+          <!-- Patient Name -->
+          <div class="col-md-6 my-2">
+            <div class="md-form">
+              <label for="patient_name" class="patient_name">Patient Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="patient_name"
+                name="patient_name"
+                placeholder="Enter patient name"
+              />
+            </div>
+          </div>
           <div class="col-md-6 my-2">
             <div class="md-form">
               <label for="age" class="age">Age</label>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='result_styles.css') }}">
+    <title>Heart Disease Prediction Result</title>
+</head>
+<body class="heart-disease">
+    <div class="container">
+        <h1>Heart Disease Prediction Result</h1>
+        <div class="result">
+            <h2>Patient ID: {{ patient_id }}</h2>
+            <h2>Patient Name: {{ patient_name }}</h2>
+            <p class="message">Unfortunately, you have been diagnosed with heart disease. Please consult your healthcare provider for further advice.</p>
+        </div>
+    </div>
+</body>
+</html>
