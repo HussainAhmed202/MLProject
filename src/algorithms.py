@@ -21,7 +21,7 @@ class KNNTransformer(BaseEstimator, TransformerMixin):
         return self
 
     def predict(self, X_test):
-        if isinstance(X_test, pd.Series):
+        if isinstance(X_test, pd.Series) or isinstance(X_test, pd.DataFrame):
             self.X_test = X_test.values.reshape(1, -1)
         else:
             self.X_test = X_test.values
@@ -85,7 +85,7 @@ class LRTransformer(BaseEstimator, TransformerMixin):
         return 1 / (1 + np.exp(-x))
 
     def predict(self, X):
-        if isinstance(X, pd.Series):
+        if isinstance(X, pd.Series) or isinstance(X, pd.DataFrame):
             X = X.values.reshape(1, -1)
         linear_model = np.dot(X, self.weights) + self.bias
         y_predicted = self._sigmoid(linear_model)
