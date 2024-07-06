@@ -14,6 +14,12 @@ from src.logger import logging
 
 from src.components.model_trainer import ModelTrainerConfig
 from src.components.model_trainer import ModelTrainer
+
+import warnings
+
+# Suppress all warnings
+warnings.filterwarnings("ignore")
+
 @dataclass
 class DataIngestionConfig:
     """Stores the path for train and test data"""

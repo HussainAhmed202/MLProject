@@ -9,6 +9,11 @@ from flask_cors import cross_origin
 
 from src.pipelines.predict_pipeline import CustomData, PredictPipeline
 
+import warnings
+
+# Suppress all warnings
+warnings.filterwarnings("ignore")
+
 app = Flask(__name__)
 
 
