@@ -5,8 +5,7 @@ import sys
 import dill
 import numpy as np
 import pandas as pd
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import GridSearchCV, StratifiedKFold, cross_val_score
+from sklearn.model_selection import GridSearchCV, cross_val_score
 
 from src.exception import CustomException
 from src.logger import logging
@@ -26,8 +25,8 @@ def save_object(file_path, obj):
 
 
 def evaluate_models(X_train, y_train, X_test, y_test, models, param):
-    try:
 
+    try:
         report = {}
 
         for i in range(len(list(models))):
@@ -40,21 +39,20 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             gs = GridSearchCV(
                 model,
                 para,
-                cv=3,
-                scoring=["accuracy", "precision", "f1", "recall"],
+                cv=5,
+                scoring=["accuracy", "precision", "f1", "recall", "roc_auc"],
                 refit="recall",
+                n_jobs=-1,
             )
             gs.fit(X_train, y_train)
+
             print(gs.best_estimator_)
 
             model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
-            print(y_test)
-            print(model.predict(X_test))
-            print(confusion_matrix(y_test, model.predict(X_test)))
 
             train_model_score = cross_val_score(
-                model, X_train, y_train, scoring="recall", cv=3
+                model, X_train, y_train, scoring="recall", cv=5, n_jobs=-1
             ).mean()
 
             print(
@@ -62,7 +60,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             )
 
             test_model_score = cross_val_score(
-                model, X_test, y_test, scoring="recall", cv=3
+                model, X_test, y_test, scoring="recall", cv=5, n_jobs=-1
             ).mean()
 
             print(
