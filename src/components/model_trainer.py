@@ -106,7 +106,7 @@ class ModelTrainer:
 
             # predicted = best_model.predict(X_test)
             # accuracy = accuracy_score(y_test, predicted)
-            accuracy = cross_val_score(best_model, X_train, y_train, cv=5).mean()
+            accuracy = cross_val_score(best_model, X_train, y_train, cv=3).mean()
             return accuracy
 
         except Exception as e:
