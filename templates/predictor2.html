@@ -57,9 +57,9 @@
                 class="form-control"
                 id="age"
                 name="age"
-                min="1"
+                min="10"
                 max="120"
-                placeholder="Enter your age"
+                placeholder="Enter your age between 10-12"
               />
             </div>
           </div>
@@ -104,6 +104,8 @@
                 id="trestbps"
                 name="trestbps"
                 step="1"
+                min="10"
+                max="400"
               />
             </div>
           </div>
@@ -117,6 +119,8 @@
                 id="chol"
                 name="chol"
                 step="1"
+                min="10"
+                max="800"
               />
             </div>
           </div>
@@ -156,6 +160,8 @@
                 class="form-control"
                 id="thalach"
                 name="thalach"
+                min="50"
+                max="250"
               />
             </div>
           </div>
@@ -184,6 +190,7 @@
                 name="oldpeak"
                 step="0.01"
                 min="0"
+                max="8"
               />
             </div>
           </div>
@@ -192,7 +199,7 @@
             <div class="md-form">
               <label for="slope" class="slope">Slope</label>
               <select class="form-control" id="slope" name="slope">
-                <option value="" disabled selected>Select slope</option>
+                <option value="" disabled selected>Select slope between 0 - 8</option>
                 <option value="1">Upsloping</option>
                 <option value="2">Flat</option>
                 <option value="3">Downsloping</option>
