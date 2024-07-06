@@ -21,7 +21,7 @@
   <body>
     <section id="prediction-form">
       <form class="form" action="/predict2" method="POST">
-        <h1 class="my-3 text-center">Predictor WithOut Python Packages</h1>
+        <h1 class="my-3 text-center">Predictor Without Python Packages</h1>
         <div class="row">
           <!-- Patient Id -->
           <div class="col-md-6 my-2">
@@ -57,7 +57,7 @@
                 class="form-control"
                 id="age"
                 name="age"
-                min="0"
+                min="1"
                 max="120"
                 placeholder="Enter your age"
               />
@@ -84,10 +84,11 @@
                 <option value="" disabled selected>
                   Select chest pain type
                 </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <option value="" disabled selected>Select chest pain</option>
+                <option value="1">Typical angina</option>
+                <option value="2">Atypical angina</option>
+                <option value="3">Non-anginal pain</option>
+                <option value="4">Asymptomatic</option>
               </select>
             </div>
           </div>
@@ -123,8 +124,9 @@
             <div class="md-form">
               <label for="fbs" class="fbs">Fasting Blood Sugar</label>
               <select class="form-control" id="fbs" name="fbs">
-                <option value="0">0</option>
-                <option value="1">1</option>
+                <option value="" disabled selected>Select fbs</option>
+                <option value="0">false</option>
+                <option value="1">true</option>
               </select>
               <small class="form-text text-muted">
                 (Fasting blood sugar &gt; 120 mg/dl) (1 = true; 0 = false)
@@ -136,9 +138,10 @@
             <div class="md-form">
               <label for="restecg" class="restecg">Resting ECG</label>
               <select class="form-control" id="restecg" name="restecg">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option value="" disabled selected>Select restecg</option>
+                <option value="0">Normal</option>
+                <option value="1">Having ST-T wave abnormality</option>
+                <option value="2">Showing probable or definite left ventricular hypertrophy</option>
               </select>
             </div>
           </div>
@@ -161,6 +164,7 @@
             <div class="md-form">
               <label for="exang" class="exang">Exercise Induced Angina</label>
               <select class="form-control" id="exang" name="exang">
+                <option value="" disabled selected>Select exang</option>
                 <option value="0">No</option>
                 <option value="1">Yes</option>
               </select>
@@ -188,9 +192,10 @@
             <div class="md-form">
               <label for="slope" class="slope">Slope</label>
               <select class="form-control" id="slope" name="slope">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <option value="" disabled selected>Select slope</option>
+                <option value="1">Upsloping</option>
+                <option value="2">Flat</option>
+                <option value="3">Downsloping</option>
               </select>
             </div>
           </div>
@@ -198,6 +203,7 @@
             <div class="md-form">
               <label for="ca" class="ca">CA</label>
               <select class="form-control" id="ca" name="ca">
+                <option value="" disabled selected>Select ca</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -209,9 +215,10 @@
             <div class="md-form">
               <label for="thal" class="thal">Thal</label>
               <select class="form-control" id="thal" name="thal">
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
+                <option value="" disabled selected>Select thal</option>
+                <option value="3">Normal</option>
+                <option value="6">Fixed defect</option>
+                <option value="7">Reversible defect</option>
               </select>
             </div>
           </div>
