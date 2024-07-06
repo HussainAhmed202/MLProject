@@ -20,6 +20,21 @@ class PredictPipeline:
             preprocessor = load_object(file_path=preprocessor_path)
             print("After Loading")
             data_scaled = preprocessor.transform(features)
+            print(data_scaled)
+            preds = model.predict(data_scaled)
+            return preds
+
+        except Exception as e:
+            raise CustomException(e, sys)
+
+    def custom_predict(self, features):
+        try:
+            model_path = os.path.join("artifacts", "model2.pkl")
+            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            model = load_object(file_path=model_path)
+            preprocessor = load_object(file_path=preprocessor_path)
+            data_scaled = preprocessor.transform(features)
+            print(data_scaled)
             preds = model.predict(data_scaled)
             return preds
 
@@ -45,19 +60,19 @@ class CustomData:
         thal: float,
     ):
 
-        self.age = age
-        self.sex = sex
-        self.cp = cp
-        self.trestbps = trestbps
-        self.chol = chol
-        self.fbs = fbs
-        self.restecg = restecg
-        self.thalach = thalach
-        self.exang = exang
-        self.oldpeak = oldpeak
-        self.slope = slope
-        self.ca = ca
-        self.thal = thal
+        self.age = int(age)
+        self.sex = int(sex)
+        self.cp = int(cp)
+        self.trestbps = int(trestbps)
+        self.chol = int(chol)
+        self.fbs = int(fbs)
+        self.restecg = int(restecg)
+        self.thalach = int(thalach)
+        self.exang = int(exang)
+        self.oldpeak = float(oldpeak)
+        self.slope = int(slope)
+        self.ca = float(ca)
+        self.thal = float(thal)
 
     def get_data_as_data_frame(self):
         try:

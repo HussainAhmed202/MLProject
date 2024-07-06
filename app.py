@@ -1,52 +1,75 @@
 import datetime
+import sys
+
 import joblib
 import numpy as np
 import pandas as pd
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_cors import cross_origin
-from sklearn.preprocessing import RobustScaler, StandardScaler
+
 from src.pipelines.predict_pipeline import CustomData, PredictPipeline
 
 app = Flask(__name__)
 
-def load_model():
-    """Loads the model from the specified model path."""
-    MODEL_PATH = "./models/model.pkl"
-    model = joblib.load(open(MODEL_PATH, "rb"))
-    print("Model Loaded")
-    return model
-
-def preprocessor(input_lst: list) -> np.ndarray:
-    """Prepares the input user data for the model"""
-    SCALAR_PATH = "prep.pkl"
-    # convert into 2D numpy array for scaling
-    input_lst = np.array(input_lst).reshape(1, -1)
-    scalar = joblib.load(open(SCALAR_PATH, "rb"))
-    print("Scaler Loaded")
-    return scalar.transform(input_lst)
 
 @app.route("/", methods=["GET"])
 @cross_origin()
 def home():
     return render_template("index.html")
 
-@app.route('/predict2', methods=['GET', 'POST'])
+
+@app.route("/predict2", methods=["GET", "POST"])
 @cross_origin()
 def predict2():
-    if request.method == 'POST':
-        # Extract form data
-        form_data = request.form.to_dict()
-        data = np.array([list(map(float, form_data.values()))])
-        # Make prediction
-        prediction = model.predict(data)[0]
-    return render_template('predictor2.html')
+    if request.method == "POST":
+        patient_id = request.form.get("patient_id")
+        patient_name = request.form.get("patient_name")
+        data = CustomData(
+            age=int(request.form.get("age")),
+            sex=int(request.form.get("sex")),
+            cp=int(request.form.get("cp")),
+            trestbps=int(request.form.get("trestbps")),
+            chol=int(request.form.get("chol")),
+            fbs=int(request.form.get("fbs")),
+            restecg=int(request.form.get("restecg")),
+            thalach=int(request.form.get("thalach")),
+            exang=int(request.form.get("exang")),
+            oldpeak=float(request.form.get("oldpeak")),
+            slope=int(request.form.get("slope")),
+            ca=float(request.form.get("ca")),
+            thal=float(request.form.get("thal")),
+        )
+        pred_df = data.get_data_as_data_frame()
+        print(pred_df)
+        print("Before Prediction")
+        predict_pipeline = PredictPipeline()
+        print("Mid Prediction")
+        results = predict_pipeline.custom_predict(pred_df)
+        print("after Prediction")
+
+        # Check the prediction result and redirect accordingly
+        has_disease = (
+            results[0] == 1
+        )  # Assuming '1' means the patient has heart disease
+        if has_disease:
+            return redirect(
+                url_for(
+                    "heart_disease", patient_id=patient_id, patient_name=patient_name
+                )
+            )
+        else:
+            return redirect(
+                url_for(
+                    "no_heart_disease", patient_id=patient_id, patient_name=patient_name
+                )
+            )
+    return render_template("predictor2.html")
+
 
 @app.route("/predict", methods=["GET", "POST"])
 @cross_origin()
 def predict():
-    if request.method == "GET":
-        return render_template("predictor.html")
-    else:
+    if request.method == "POST":
         patient_id = request.form.get("patient_id")
         patient_name = request.form.get("patient_name")
         data = CustomData(
@@ -73,23 +96,41 @@ def predict():
         print("after Prediction")
 
         # Check the prediction result and redirect accordingly
-        has_disease = results[0] == 1  # Assuming '1' means the patient has heart disease
+        has_disease = (
+            results[0] == 1
+        )  # Assuming '1' means the patient has heart disease
         if has_disease:
-            return redirect(url_for('heart_disease', patient_id=patient_id, patient_name=patient_name))
+            return redirect(
+                url_for(
+                    "heart_disease", patient_id=patient_id, patient_name=patient_name
+                )
+            )
         else:
-            return redirect(url_for('no_heart_disease', patient_id=patient_id, patient_name=patient_name))
+            return redirect(
+                url_for(
+                    "no_heart_disease", patient_id=patient_id, patient_name=patient_name
+                )
+            )
+    return render_template("predictor.html")
 
-@app.route('/heart_disease')
+
+@app.route("/heart_disease")
 def heart_disease():
-    patient_id = request.args.get('patient_id')
-    patient_name = request.args.get('patient_name')
-    return render_template('heart_disease.html', patient_id=patient_id, patient_name=patient_name)
+    patient_id = request.args.get("patient_id")
+    patient_name = request.args.get("patient_name")
+    return render_template(
+        "heart_disease.html", patient_id=patient_id, patient_name=patient_name
+    )
 
-@app.route('/no_heart_disease')
+
+@app.route("/no_heart_disease")
 def no_heart_disease():
-    patient_id = request.args.get('patient_id')
-    patient_name = request.args.get('patient_name')
-    return render_template('no_heart_disease.html', patient_id=patient_id, patient_name=patient_name)
+    patient_id = request.args.get("patient_id")
+    patient_name = request.args.get("patient_name")
+    return render_template(
+        "no_heart_disease.html", patient_id=patient_id, patient_name=patient_name
+    )
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
