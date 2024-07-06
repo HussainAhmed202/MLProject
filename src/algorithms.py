@@ -20,7 +20,7 @@ class KNNTransformer(BaseEstimator, TransformerMixin):
         self.y_train = y_train.values
         return self
 
-    def predict(self, X_test: pd.DataFrame | pd.Series):
+    def predict(self, X_test):
         if isinstance(X_test, pd.Series):
             self.X_test = X_test.values.reshape(1, -1)
         else:
