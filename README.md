@@ -1,5 +1,7 @@
 # Heart Disease Prediction
 
-Steps to Run the Project:
+## Steps to Run the Project:
+```bash
 1.Run data_ingestion.py
 2.Run app.py
+```
