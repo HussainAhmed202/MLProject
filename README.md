@@ -1,4 +1,4 @@
-# Heart Disease Prediction
+# Heart Disease Classification
 
 ## Steps to Run the Project:
 ```bash
